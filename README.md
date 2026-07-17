@@ -25,7 +25,7 @@ cp .env.example .env
 
 ## 발표자료
 
-[`presentation/index.html`](./presentation/index.html)을 브라우저로 열면 프로젝트 소개 슬라이드를 볼 수 있습니다.
+[`presentation/pre.html`](./presentation/pre.html)을 브라우저로 열면 프로젝트 소개 슬라이드를 볼 수 있습니다.
 좌우 화살표 키 또는 하단 버튼으로 슬라이드를 넘길 수 있습니다.
 
 ## 구조
@@ -39,5 +39,5 @@ backend/
   Code.gs          # Apps Script 소스 (Google Sheets에 붙여넣어 배포)
   README.md        # 백엔드 배포 가이드
 presentation/
-  index.html       # 프로젝트 발표자료 (슬라이드 덱)
+  pre.html         # 프로젝트 발표자료 (슬라이드 덱)
 ```
