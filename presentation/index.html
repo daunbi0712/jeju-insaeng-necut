@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>제주 인생네컷 — 발표자료</title>
+<style>
+  @font-face {
+    font-family: 'JetBrains Mono Sub';
+    src: local('SF Mono'), local('Menlo');
+  }
+
+  :root {
+    --bg: #FFF8EC;
+    --bg-raised: #FFFFFF;
+    --ink: #2B2621;
+    --ink-soft: #6B6154;
+    --accent: #FF8A3D;
+    --accent-ink: #C85A22;
+    --sea: #148A9C;
+    --sea-soft: #DCF1F0;
+    --sand: #F4C77B;
+    --leaf: #4C9A5A;
+    --line: rgba(43, 38, 33, 0.14);
+    --line-soft: rgba(43, 38, 33, 0.08);
+    --shadow: 0 18px 40px rgba(43, 38, 33, 0.10);
+
+    --font-mono: ui-monospace, 'SF Mono', 'Menlo', 'Cascadia Code', monospace;
+    --font-kr: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12262A;
+      --bg-raised: #1B363B;
+      --ink: #F4EEE2;
+      --ink-soft: #A9BAB9;
+      --accent: #FF9E5E;
+      --accent-ink: #FFC08A;
+      --sea: #6FD2DD;
+      --sea-soft: #1F4348;
+      --sand: #E4B463;
+      --leaf: #7BC98A;
+      --line: rgba(244, 238, 226, 0.16);
+      --line-soft: rgba(244, 238, 226, 0.08);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12262A;
+    --bg-raised: #1B363B;
+    --ink: #F4EEE2;
+    --ink-soft: #A9BAB9;
+    --accent: #FF9E5E;
+    --accent-ink: #FFC08A;
+    --sea: #6FD2DD;
+    --sea-soft: #1F4348;
+    --sand: #E4B463;
+    --leaf: #7BC98A;
+    --line: rgba(244, 238, 226, 0.16);
+    --line-soft: rgba(244, 238, 226, 0.08);
+    --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  }
+  :root[data-theme="light"] {
+    --bg: #FFF8EC;
+    --bg-raised: #FFFFFF;
+    --ink: #2B2621;
+    --ink-soft: #6B6154;
+    --accent: #FF8A3D;
+    --accent-ink: #C85A22;
+    --sea: #148A9C;
+    --sea-soft: #DCF1F0;
+    --sand: #F4C77B;
+    --leaf: #4C9A5A;
+    --line: rgba(43, 38, 33, 0.14);
+    --line-soft: rgba(43, 38, 33, 0.08);
+    --shadow: 0 18px 40px rgba(43, 38, 33, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-kr);
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+  .deck {
+    display: flex;
+    height: 100dvh;
+    width: 100dvw;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .deck::-webkit-scrollbar { display: none; }
+
+  .slide {
+    flex: 0 0 100vw;
+    height: 100dvh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(28px, 5vw, 88px) clamp(24px, 7vw, 108px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(18px, 3vw, 30px);
+    max-width: 1120px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 18px;
+    height: 2px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1, h2 {
+    margin: 0;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .lede {
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 62ch;
+  }
+
+  /* ---------- title slide ---------- */
+  .slide--title { justify-content: center; }
+  .title-mark {
+    width: 92px;
+    height: 92px;
+    margin-bottom: 22px;
+  }
+  .title-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sea);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .slide--title h1 {
+    font-size: clamp(44px, 8vw, 92px);
+    font-weight: 800;
+    line-height: 1.05;
+  }
+  .slide--title .subtitle {
+    margin-top: 14px;
+    font-size: clamp(16px, 2vw, 21px);
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .tag-row {
+    margin-top: 34px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    background: var(--bg-raised);
+  }
+
+  /* ---------- feature grid (slide 2) ---------- */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .feature-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .feature-card svg { width: 26px; height: 26px; color: var(--accent); }
+  .feature-card h3 {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 700;
+  }
+  .feature-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* ---------- flow (slide 3) ---------- */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .flow-step {
+    flex: 1;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 18px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .flow-step .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-ink);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .flow-step h3 {
+    margin: 10px 0 6px;
+    font-size: 15.5px;
+    font-weight: 700;
+  }
+  .flow-step p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .flow-arrow {
+    flex: 0 0 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--line);
+  }
+  .flow-arrow svg { width: 20px; height: 20px; }
+
+  /* ---------- two column (slide 4) ---------- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .stack-list { display: flex; flex-direction: column; gap: 4px; }
+  .stack-row {
+    display: grid;
+    grid-template-columns: 108px 1fr;
+    gap: 14px;
+    align-items: baseline;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .stack-row:last-child { border-bottom: none; }
+  .stack-row .tech {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--sea);
+  }
+  .stack-row .desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .code-chip {
+    background: #1E1B17;
+    border-radius: 14px;
+    padding: 22px 22px;
+    box-shadow: var(--shadow);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.85;
+    color: #E9E1D3;
+    overflow-x: auto;
+  }
+  .code-chip .c-key { color: #FF9E5E; }
+  .code-chip .c-fn { color: #7BD3DD; }
+  .code-chip .c-str { color: #B8D98A; }
+  .code-chip .c-comment { color: #7A7264; }
+
+  /* ---------- motif row (slide 5) ---------- */
+  .motif-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .motif-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px 16px 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  .motif-card svg { width: 56px; height: 56px; }
+  .motif-card span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .callout {
+    margin-top: 6px;
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 16px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 62ch;
+  }
+
+  /* ---------- architecture diagram (slide 6, 7) ---------- */
+  .arch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .arch-box {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    min-width: 160px;
+    text-align: center;
+  }
+  .arch-box .label {
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+  .arch-box .sub {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .arch-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 18px;
+  }
+  .arch-link svg { width: 30px; height: 16px; color: var(--sea); }
+  .arch-link .tag-mono {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--sea);
+    white-space: nowrap;
+  }
+  .arch-col {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: center;
+  }
+  .arch-note {
+    margin-top: 26px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  .arch-note b { color: var(--ink); }
+
+  .deploy-list {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .deploy-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .deploy-item svg { width: 16px; height: 16px; flex: none; margin-top: 3px; color: var(--leaf); }
+
+  /* ---------- next steps (slide 8) ---------- */
+  .next-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .next-row {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: flex-start;
+  }
+  .next-row:last-child { border-bottom: none; }
+  .next-row svg { width: 22px; height: 22px; color: var(--accent); margin-top: 2px; }
+  .next-row h3 { margin: 0 0 4px; font-size: 15.5px; font-weight: 700; }
+  .next-row p { margin: 0; font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ---------- closing ---------- */
+  .slide--closing {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .slide--closing h1 {
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 800;
+  }
+  .slide--closing p {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+  .repo-chip {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--bg-raised);
+  }
+
+  /* ---------- wave divider ---------- */
+  .wave-divider {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 30px;
+    opacity: 0.55;
+  }
+
+  /* ---------- nav ---------- */
+  .deck-nav {
+    position: fixed;
+    left: 0; right: 0; bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .deck-nav > * { pointer-events: auto; }
+  .nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--bg-raised);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+  }
+  .nav-btn svg { width: 16px; height: 16px; }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .nav-btn:focus-visible, .dot:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .nav-btn:disabled { opacity: 0.35; cursor: default; }
+
+  .dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 14px;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .dot.active {
+    width: 20px;
+    border-radius: 4px;
+    background: var(--accent);
+  }
+
+  .counter {
+    position: fixed;
+    top: 26px;
+    right: clamp(24px, 7vw, 108px);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    z-index: 10;
+  }
+  .counter b { color: var(--ink); }
+
+  @media (max-width: 860px) {
+    body { overflow: auto; }
+    .deck { overflow-x: hidden; overflow-y: auto; scroll-snap-type: y mandatory; }
+    .slide { flex: 0 0 auto; height: auto; min-height: 100dvh; scroll-snap-align: start; }
+    .feature-grid, .motif-row { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); padding: 6px 0; }
+    .deploy-list { grid-template-columns: 1fr; }
+    .arch { flex-direction: column; }
+    .arch-link { flex-direction: row; padding: 10px 0; }
+    .arch-link svg { transform: rotate(90deg); }
+    .counter { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .deck { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="counter"><b id="counterCurrent">01</b> / <span id="counterTotal">09</span></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. TITLE -->
+  <section class="slide slide--title">
+    <svg class="title-mark" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="56" r="30" fill="var(--accent)"/>
+      <ellipse cx="43" cy="20" rx="14" ry="7" fill="var(--leaf)" transform="rotate(-24 43 20)"/>
+      <line x1="50" y1="26" x2="50" y2="16" stroke="var(--leaf)" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <div class="title-eyebrow">TEAM PROJECT · WEB APP</div>
+    <h1>제주 인생네컷</h1>
+    <p class="subtitle">노트북 웹캠으로 찍는 4컷 포토부스, 제주 컨셉 프레임</p>
+    <div class="tag-row">
+      <span class="tag">React · Vite</span>
+      <span class="tag">Canvas 2D</span>
+      <span class="tag">Google Sheets + Apps Script</span>
+      <span class="tag">GitHub → Render</span>
+    </div>
+  </section>
+
+  <!-- 2. OVERVIEW -->
+  <section class="slide">
+    <div class="slide-body">
+      <div class="eyebrow">Overview</div>
+      <h2>브라우저만 열면 바로 찍는 인생네컷</h2>
+      <p class="lede">설치도, 서버도 없이 — 웹캠 권한만 허용하면 4컷 촬영부터 다운로드까지 한 화면에서 끝납니다.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="14" height="11" rx="2"/><path d="M17 10l4-2v9l-4-2"/><circle cx="10" cy="12.5" r="3"/></svg>
+          <h3>실시간 웹캠 프리뷰</h3>
+          <p>getUserMedia로 카메라를 켜고 좌우 반전 프리뷰 제공</p>
+        </div>
+        <div class="feature-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg>
+          <h3>3·2·1 자동 촬영</h3>
+          <p>카운트다운 후 자동 캡처를 4번 반복</p>
+        </div>
+        <div class="feature-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M21 16l-5.5-5.5L9 17"/></svg>
+          <h3>제주 프레임 합성</h3>
+          <p>돌하르방·야자수·감귤을 canvas로 실시간 합성</p>
+        </div>
+        <div class="feature-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v11"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>
+          <h3>다운로드 / 재촬영</h3>
+          <p>완성본을 PNG로 저장하거나 바로 다시 촬영</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FLOW -->
+  <section class="slide">
+    <div class="slide-body">
+      <div class="eyebrow">User Flow</div>
+      <h2>촬영은 네 단계로 끝난다</h2>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="num">STEP 01</div>
+          <h3>카메라 켜기</h3>
+          <p>페이지 진입 시 브라우저가 웹캠 권한을 요청</p>
+        </div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="flow-step">
+          <div class="num">STEP 02</div>
+          <h3>4컷 카운트다운</h3>
+          <p>3·2·1 후 촬영, 총 4회 자동 반복</p>
+        </div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="flow-step">
+          <div class="num">STEP 03</div>
+          <h3>프레임 합성</h3>
+          <p>4장을 제주 컨셉 프레임에 canvas로 합성</p>
+        </div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="flow-step">
+          <div class="num">STEP 04</div>
+          <h3>다운로드</h3>
+          <p>완성 이미지를 저장하거나 다시 촬영</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FRONTEND -->
+  <section class="slide">
+    <div class="slide-body">
+      <div class="eyebrow">Frontend</div>
+      <h2>React + Vite, 그리고 Canvas 하나로</h2>
+      <div class="two-col">
+        <div class="stack-list">
+          <div class="stack-row"><span class="tech">React 18</span><span class="desc">촬영 단계(대기·카운트다운·촬영·완료)를 상태로 관리</span></div>
+          <div class="stack-row"><span class="tech">Vite</span><span class="desc">개발 서버 · 프로덕션 번들링</span></div>
+          <div class="stack-row"><span class="tech">getUserMedia</span><span class="desc">브라우저 표준 API로 웹캠 스트림 획득</span></div>
+          <div class="stack-row"><span class="tech">Canvas 2D</span><span class="desc">외부 라이브러리 없이 프레임을 코드로 직접 렌더링</span></div>
+        </div>
+        <div class="code-chip">
+<span class="c-comment">// 4컷 촬영이 끝나면 프레임에 합성</span><br/>
+<span class="c-fn">drawJejuFrame</span>(<br/>
+&nbsp;&nbsp;canvas,<br/>
+&nbsp;&nbsp;capturedPhotos, <span class="c-comment">// 4장</span><br/>
+&nbsp;&nbsp;<span class="c-str">'2026.07.18'</span><br/>
+)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. FRAME DESIGN -->
+  <section class="slide">
+    <div class="slide-body">
+      <div class="eyebrow">Design</div>
+      <h2>이미지 없이, 코드로 그린 제주</h2>
+      <div class="motif-row">
+        <div class="motif-card">
+          <svg viewBox="0 0 60 60"><rect x="16" y="10" width="28" height="9" rx="3" fill="var(--ink-soft)"/><path d="M14 20 C10 34 12 46 16 52 L44 52 C48 46 50 34 46 20 Z" fill="var(--ink-soft)"/><circle cx="24" cy="30" r="3" fill="var(--bg-raised)"/><circle cx="36" cy="30" r="3" fill="var(--bg-raised)"/></svg>
+          <span>돌하르방</span>
+        </div>
+        <div class="motif-card">
+          <svg viewBox="0 0 60 60"><path d="M30 52 V26" stroke="var(--sand)" stroke-width="4" fill="none" stroke-linecap="round"/><g fill="var(--leaf)"><ellipse cx="30" cy="20" rx="16" ry="6"/><ellipse cx="30" cy="20" rx="16" ry="6" transform="rotate(60 30 20)"/><ellipse cx="30" cy="20" rx="16" ry="6" transform="rotate(120 30 20)"/></g></svg>
+          <span>야자수</span>
+        </div>
+        <div class="motif-card">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="34" r="16" fill="var(--accent)"/><ellipse cx="27" cy="16" rx="7" ry="3.4" fill="var(--leaf)" transform="rotate(-24 27 16)"/></svg>
+          <span>감귤</span>
+        </div>
+        <div class="motif-card">
+          <svg viewBox="0 0 60 60"><path d="M6 26 Q16 18 26 26 T46 26 T56 26" stroke="var(--sea)" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M6 38 Q16 30 26 38 T46 38 T56 38" stroke="var(--sea)" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.5"/></svg>
+          <span>파도</span>
+        </div>
+      </div>
+      <p class="callout">외부 이미지 리소스 없이 canvas 도형만으로 그려서 저작권 걱정 없이, 어떤 해상도에서도 선명하게 렌더링됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 6. BACKEND -->
+  <section class="slide">
+    <div class="slide-body">
+      <div class="eyebrow">Backend</div>
+      <h2>Google Sheets를 DB처럼, Apps Script를 API처럼</h2>
+      <div class="arch">
+        <div class="arch-box">
+          <div class="label">브라우저</div>
+          <div class="sub">React App</div>
+        </div>
+        <div class="arch-col">
+          <div class="arch-link">
+            <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 6h20M14 1l6 5-6 5"/></svg>
+            <span class="tag-mono">POST 촬영 기록</span>
+          </div>
+          <div class="arch-link">
+            <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2" style="transform:scaleX(-1)"><path d="M0 6h20M14 1l6 5-6 5"/></svg>
+            <span class="tag-mono">GET 통계 응답</span>
+          </div>
+        </div>
+        <div class="arch-box">
+          <div class="label">Apps Script</div>
+          <div class="sub">doPost / doGet</div>
+        </div>
+        <div class="arch-link">
+          <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 6h20M14 1l6 5-6 5"/></svg>
+          <span class="tag-mono">appendRow</span>
+        </div>
+        <div class="arch-box">
+          <div class="label">Google Sheet</div>
+          <div class="sub">Log 시트</div>
+        </div>
+      </div>
+      <p class="arch-note">촬영이 끝날 때마다 <b>Timestamp · Event</b>가 시트에 쌓이고, 화면 하단에 <b>누적 / 오늘 촬영 수</b>를 보여줍니다.</p>
+    </div>
+  </section>
+
+  <!-- 7. DEPLOYMENT -->
+  <section class="slide">
+    <div class="slide-body">
+      <div class="eyebrow">Deployment</div>
+      <h2>GitHub → Render, 자동 배포</h2>
+      <div class="arch">
+        <div class="arch-box">
+          <div class="label">GitHub</div>
+          <div class="sub">jeju-insaeng-necut</div>
+        </div>
+        <div class="arch-link">
+          <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 6h20M14 1l6 5-6 5"/></svg>
+          <span class="tag-mono">git push</span>
+        </div>
+        <div class="arch-box">
+          <div class="label">Render</div>
+          <div class="sub">Static Site</div>
+        </div>
+        <div class="arch-link">
+          <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 6h20M14 1l6 5-6 5"/></svg>
+          <span class="tag-mono">HTTPS</span>
+        </div>
+        <div class="arch-box">
+          <div class="label">배포된 사이트</div>
+          <div class="sub">웹캠 접근 가능</div>
+        </div>
+      </div>
+      <div class="deploy-list">
+        <div class="deploy-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Public 저장소로 코드 공개</div>
+        <div class="deploy-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>render.yaml로 빌드 설정 고정</div>
+        <div class="deploy-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>환경변수로 백엔드 URL 분리 관리</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. NEXT -->
+  <section class="slide">
+    <div class="slide-body">
+      <div class="eyebrow">Next Steps</div>
+      <h2>다음에 더해보고 싶은 것</h2>
+      <div class="next-list">
+        <div class="next-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+          <div><h3>프레임 다양화</h3><p>계절·시간대별 제주 프레임과 스티커 옵션 추가</p></div>
+        </div>
+        <div class="next-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 4h7v7"/></svg>
+          <div><h3>통계 대시보드</h3><p>시간대별 촬영 추이를 그래프로 보여주는 관리자 화면</p></div>
+        </div>
+        <div class="next-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+          <div><h3>모바일 대응</h3><p>후면 카메라 전환과 세로 레이아웃 최적화</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CLOSING -->
+  <section class="slide slide--closing">
+    <h1>감사합니다</h1>
+    <p>질문 환영합니다</p>
+    <div class="repo-chip">github.com/daunbi0712/jeju-insaeng-necut</div>
+  </section>
+
+</div>
+
+<nav class="deck-nav">
+  <button class="nav-btn" id="prevBtn" aria-label="이전 슬라이드">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="다음 슬라이드">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</nav>
+
+<script>
+  (function () {
+    const deck = document.getElementById('deck');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const counterCurrent = document.getElementById('counterCurrent');
+    const counterTotal = document.getElementById('counterTotal');
+
+    counterTotal.textContent = String(slides.length).padStart(2, '0');
+
+    let current = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', (i + 1) + '번 슬라이드로 이동');
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function setActive(i) {
+      current = i;
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      counterCurrent.textContent = String(i + 1).padStart(2, '0');
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === slides.length - 1;
+    }
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      const vertical = window.matchMedia('(max-width: 860px)').matches;
+      slides[i].scrollIntoView({
+        behavior: 'auto',
+        inline: vertical ? 'nearest' : 'start',
+        block: vertical ? 'start' : 'nearest',
+      });
+      setActive(i);
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    window.addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); goTo(current + 1); }
+      if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); goTo(current - 1); }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          setActive(slides.indexOf(entry.target));
+        }
+      });
+    }, { threshold: [0.6] });
+    slides.forEach((s) => observer.observe(s));
+
+    setActive(0);
+  })();
+</script>
+</body>
+</html>
